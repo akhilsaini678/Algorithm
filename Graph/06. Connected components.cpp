@@ -1,0 +1,108 @@
+/*
+ Akhil Saini
+*/
+#include <bits/stdc++.h>
+using namespace std;
+
+void bfs(vector<int> graph[], int start, int n, vector<bool> &visited){
+	queue<int> q;
+	q.push(start);
+	visited[start] = true;
+	while(!q.empty()){
+		int u = q.front();
+		q.pop();
+		for(auto v: graph[u]){
+			if(visited[v]==false){
+				q.push(v);
+				visited[v]=true;
+			}
+		}
+	}
+}
+
+void dfs(vector<int> graph[], int start,vector<bool> &visited){
+	visited[start] = true;
+	for(auto v: graph[start]){
+		if(visited[v]==false){
+			dfs(graph,v,visited);
+		}
+	}
+}
+
+
+void solve()
+{
+	int n,m;
+	cin>>n>>m;
+	vector<int> graph[n+1];
+	for(int i=0;i<m;i++)
+	{
+		int u,v;
+		cin>>u>>v;
+		graph[u].push_back(v);
+		graph[v].push_back(u);
+	}
+
+	// BFS
+	vector<bool> visited(n+1,false);
+	int cntComponent = 0;
+	for(int i=1;i<=n;i++){
+		if(visited[i]==false){
+			cntComponent++;
+			bfs(graph,i,n,visited);
+		}
+	}
+	cout<<cntComponent<<endl;
+
+	// DFS
+	vector<bool> visited1(n+1,false);
+	cntComponent = 0;
+	for(int i=1;i<=n;i++){
+		if(visited1[i]==false){
+			cntComponent++;
+			dfs(graph,i,visited1);
+		}
+	}
+	cout<<cntComponent<<endl;
+}
+
+
+void fast()
+{
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+    #ifndef ONLINE_JUDGE
+    freopen("D:\\Data\\Online\\Coding\\Contest\\input.txt","r",stdin);
+    freopen("D:\\Data\\Online\\Coding\\Contest\\output.txt","w",stdout);
+    #endif
+}
+
+int32_t main()
+{
+    fast();
+    int t=1;
+    cin>>t;
+    while(t--) solve();
+    return 0;
+}
+
+
+/* Test Cases:
+
+Input:
+1
+8 7
+1 2
+2 5
+2 6
+3 4
+4 8
+7 3
+8 7
+
+
+
+Output:
+2
+2
+
+*/

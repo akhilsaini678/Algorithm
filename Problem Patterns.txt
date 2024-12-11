@@ -1,0 +1,13 @@
+1. If a number is required to cange from n to m, given some operations and cost, ten it is sortest pat problem.
+Convert it to grap and find te sortest pat from n to m.
+
+void SieveOfEratosthenes(int n)
+{
+    vector<bool> prime(n + 1, true);
+  	for (int p = 2; p * p <= n; p++) {
+        if (prime[p] == true) {
+            for (int i = p * p; i <= n; i += p)
+                prime[i] = false;
+        }
+    }
+}
